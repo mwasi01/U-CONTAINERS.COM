@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Drums & Containers Store | NEVER GIVE UP ENTERPRISE</title>
+    <meta name="description" content="NEVER GIVE UP ENTERPRISE - Premium quality drums, containers, jikos, and farming tools in Kenya. Best prices for storage and agricultural solutions.">
+    <meta name="keywords" content="drums, containers, jikos, farming tools, Kenya, storage solutions, NEVER GIVE UP ENTERPRISE">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            position: relative;
+        }
+        
+        body::after {
+            content: "NEVER GIVE UP";
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            letter-spacing: 2px;
+            transform: rotate(-90deg);
+            transform-origin: left bottom;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .category-divider {
+            height: 4px;
+            width: 100px;
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width .3s;
+        }
+        
+        .cart-counter {
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .brand-badge {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Success message styling */
+        .success-message {
+            display: none;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+            border-radius: 0.375rem;
+        }
+        
+        /* Error message styling */
+        .error-message {
+            display: none;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="flex items-center">
+                            <!-- Logo mark -->
+                            <div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                                NGU
+                            </div>
+                            <!-- Text logo -->
+                            <div class="ml-3 hidden md:block">
+                                <div class="text-sm font-bold text-gray-900 leading-tight">NEVER GIVE UP</div>
+                                <div class="text-xs text-gray-500">ENTERPRISE</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden md:ml-8 md:flex md:space-x-8">
+                        <a href="#drums" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium hover:border-blue-500">Drums</a>
+                        <a href="#jikos" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium hover:border-blue-500">Jikos</a>
+                        <a href="#tools" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium hover:border-blue-500">Tools</a>
+                        <a href="#accessories" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium hover:border-blue-500">Accessories</a>
+                        <a href="#misc" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium hover:border-blue-500">Miscellaneous</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative">
+                        <button id="cart-button" class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none" aria-label="Shopping Cart" aria-expanded="false">
+                            <span class="sr-only">View cart</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span class="cart-counter absolute bg-blue-600 text-white rounded-full flex items-center justify-center">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-green-50 to-blue-50 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-20 left-10 w-40 h-40 bg-blue-400 rounded-full filter blur-xl"></div>
+            <div class="absolute bottom-10 right-10 w-60 h-60 bg-green-400 rounded-full filter blur-xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center">
+                <!-- Business name as a badge -->
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-white shadow-md mb-6">
+                    <span class="text-blue-600 font-bold tracking-wider">NEVER GIVE UP</span>
+                    <span class="ml-2 text-gray-700 font-medium">ENTERPRISE</span>
+                </div>
+                
+                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                    <span class="block">Quality Containers &</span>
+                    <span class="block text-blue-600">Gardening Solutions</span>
+                </h1>
+                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Premium drums, jikos, and farming tools for all your storage and agricultural needs.
+                </p>
+                <div class="mt-5 sm:mt-8 sm:flex sm:justify-center">
+                    <div class="rounded-md shadow">
+                        <a href="#drums" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10">
+                            Shop Now
+                        </a>
+                    </div>
+                    <div class="mt-3 sm:mt-0 sm:ml-3">
+                        <a href="#contact" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drums & Containers Section -->
+    <section id="drums" class="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <div class="text-xs font-semibold tracking-wider text-blue-600 uppercase">NEVER GIVE UP ENTERPRISE</div>
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Drums & Containers
+                </h2>
+                <div class="category-divider bg-green-500"></div>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    High-quality plastic and metal containers for all your storage needs
+                </p>
+            </div>
+            
+            <div class="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Drum Products -->
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Blue 250-liter open-top plastic drum with sturdy handles and thick walls" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            250L Open Plastic Drum
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Capacity: 250 liters</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 3,500</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="White 250-liter closed plastic drum with security lock and removable lid" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            250L Closed Plastic Drum
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Capacity: 250 liters</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 4,000</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="170-liter Funiko drum with reinforced bottom and side handles for easy transport" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            170L Funiko Drum
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Capacity: 170 liters</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 3,200</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="120-liter plastic drum with screw-on lid and built-in handles on both sides" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            120L Plastic Drum
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Capacity: 120 liters</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 2,800</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jikos Section -->
+    <section id="jikos" class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <div class="text-xs font-semibold tracking-wider text-blue-600 uppercase">NEVER GIVE UP ENTERPRISE</div>
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Jikos (Charcoal Cookers)
+                </h2>
+                <div class="category-divider bg-yellow-500"></div>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    Energy-efficient charcoal cookers for your kitchen needs
+                </p>
+            </div>
+            
+            <div class="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Jiko Products -->
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Small size charcoal jiko with metal casing and ceramic liner, ideal for single person use" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Small Jiko
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Compact size</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 950</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Standard charcoal jiko with efficient air flow design and heat-resistant paint" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Standard Jiko
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Family size</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 1,200</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Medium size jiko with double layer ceramic insulation and reinforced stand" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Medium Jiko
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Extra capacity</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 1,500</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Commercial size 13 jiko with wide cooking surface and efficient charcoal chamber" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Size 13 Jiko
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Commercial grade</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 2,000</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farming Tools Section -->
+    <section id="tools" class="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <div class="text-xs font-semibold tracking-wider text-blue-600 uppercase">NEVER GIVE UP ENTERPRISE</div>
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Farming & Gardening Tools
+                </h2>
+                <div class="category-divider bg-orange-500"></div>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    High-quality tools to help you cultivate your land
+                </p>
+            </div>
+            
+            <div class="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Tool Products -->
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Steel-headed spade with reinforced wooden handle for digging and soil cultivation" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Spade
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Gardening essential</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 850</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Compact rake with steel teeth and lightweight wooden handle for garden cleanup" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Small Rake
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Leaf collection</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 600</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Large heavy-duty rake with sturdy metal head and long reinforced handle for field work" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Big Rake
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Heavy duty</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 750</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Traditional fork jembe with four sturdy tines and durable wooden handle for soil cultivation" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Fork Jembe
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Soil cultivation</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 900</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accessories Section -->
+    <section id="accessories" class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <div class="text-xs font-semibold tracking-wider text-blue-600 uppercase">NEVER GIVE UP ENTERPRISE</div>
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Accessories & Parts
+                </h2>
+                <div class="category-divider bg-red-500"></div>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    Essential accessories to complement your products
+                </p>
+            </div>
+            
+            <div class="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Accessory Products -->
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Various plastic drum lids and covers in different sizes and airtight designs" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Vifuniko (Tops/Covers)
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Various sizes available</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">From KES 250</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Miscellaneous Section -->
+    <section id="misc" class="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <div class="text-xs font-semibold tracking-wider text-blue-600 uppercase">NEVER GIVE UP ENTERPRISE</div>
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Miscellaneous
+                </h2>
+                <div class="category-divider bg-purple-500"></div>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    Other essential products for diverse needs
+                </p>
+            </div>
+            
+            <div class="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Miscellaneous Products -->
+                <div class="product-card group relative bg-white p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-full min-h-80 bg-gray-200 rounded-md overflow-hidden">
+                        <img src="https://placehold.co/400x300" alt="Standard metal drum with blue paint for liquid storage and industrial use" class="w-full h-full object-center object-cover" loading="lazy">
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Metal Drum (Unspecified size)
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">Heavy-duty metal container</p>
+                        <p class="mt-1 text-lg font-medium text-blue-600">KES 5,500</p>
+                        <button class="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Motivational Banner -->
+    <div class="bg-blue-600 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                <span class="block">NEVER GIVE UP</span>
+                <span class="block text-blue-100">ENTERPRISE</span>
+            </h2>
+            <p class="mt-3 max-w-2xl mx-auto text-xl text-blue-100">
+                Persistence and quality - that's our promise to you
+            </p>
+            <div class="mt-8 flex justify-center">
+                <div class="inline-flex rounded-md shadow">
+                    <a href="#contact" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Contact Us
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500">
+                    Have questions? Reach out to our team
+                </p>
+            </div>
+            
+            <div class="mt-10 bg-white shadow-xl rounded-lg overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 sm:p-10 lg:p-12">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img src="https://placehold.co/800x600" alt="Modern storefront with display of drums and gardening tools, welcoming customers" class="w-full h-full object-cover rounded-lg" loading="lazy">
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium text-gray-900">Visit Our Store</h3>
+                            <p class="mt-2 text-gray-600">
+                                Kikuyu, Kenya
+                            </p>
+                            <div class="mt-4 flex items-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                +254704787011
+                            </div>
+                            <div class="mt-2 flex items-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                nopgiveup@gmail.com
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-8 sm:p-10 lg:p-12">
+                        <h3 class="text-lg font-medium text-gray-900">Send us a message</h3>
+                        <!-- Success and Error Messages -->
+                        <div id="success-message" class="success-message">
+                            Your message has been sent successfully! We'll get back to you soon.
+                        </div>
+                        <div id="error-message" class="error-message">
+                            There was an error sending your message. Please try again later.
+                        </div>
+                        
+                        <!-- Updated Form with formsubmit.co integration -->
+                        <form id="contact-form" action="https://formsubmit.co/nopgiveup@gmail.com" method="POST" class="mt-6 space-y-6">
+                            <!-- FormSubmit Configuration -->
+                            <input type="hidden" name="_subject" value="New message from NEVER GIVE UP ENTERPRISE website">
+                            <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                            <input type="hidden" name="_captcha" value="false">
+                            
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                <input type="tel" id="phone" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                                <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                            </div>
+                            
+                            <div>
+                                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Enhanced About Us Section with Social Media -->
+                <div>
+                    <h3 class="text-lg font-medium">About NEVER GIVE UP ENTERPRISE</h3>
+                    <p class="mt-4 text-gray-400">
+                        We provide high-quality drums, containers, jikos, and farming tools to meet all your storage and agricultural needs with persistence and dedication.
+                    </p>
+                    
+                    <!-- Social Media Icons -->
+                    <div class="mt-6">
+                        <h4 class="text-sm font-medium text-gray-300 mb-3">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="social-icon text-gray-400 hover:text-white">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon text-gray-400 hover:text-white">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon text-gray-400 hover:text-white">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/254721200637" target="_blank" class="social-icon text-gray-400 hover:text-white">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@user7054409306512" target="_blank" class="social-icon text-gray-400 hover:text-white">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Section -->
+                <div>
+                    <h3 class="text-lg font-medium">Quick Links</h3>
+                    <nav class="mt-4 space-y-2">
+                        <a href="#drums" class="block text-gray-400 hover:text-white">Drums</a>
+                        <a href="#jikos" class="block text-gray-400 hover:text-white">Jikos</a>
+                        <a href="#tools" class="block text-gray-400 hover:text-white">Tools</a>
+                        <a href="#accessories" class="block text-gray-400 hover:text-white">Accessories</a>
+                        <a href="#contact" class="block text-gray-400 hover:text-white">Contact</a>
+                    </nav>
+                </div>
+                
+                <!-- Business Hours with Map -->
+                <div>
+                    <h3 class="text-lg font-medium">Business Hours</h3>
+                    <div class="mt-4 text-gray-400">
+                        <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                        <p>Saturday: 9:00 AM - 2:00 PM</p>
+                        <p>Sunday: Closed</p>
+                        
+                        <!-- Corrected Google Map Embed -->
+                        <div class="mt-6 rounded-lg overflow-hidden shadow-lg">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.854244477537!2d36.6627099!3d-1.2417467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1f104ef08d3d%3A0x3cb6763eaeed5c4!2sLATE%20NIGHT%20CHEMIST!5e0!3m2!1sen!2ske!4v1698765432105!5m2!1sen!2ske" 
+                                width="100%" 
+                                height="200" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                class="rounded-lg"
+                                title="NEVER GIVE UP ENTERPRISE Location">
+                            </iframe>
+                            <p class="mt-2 text-sm text-center">Our location in Kikuyu, Kenya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800">
+                <p class="text-center text-gray-400">
+                    &copy; 2023 NEVER GIVE UP ENTERPRISE. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simple Shopping Cart Modal -->
+    <div id="cart-modal" class="hidden fixed inset-0 overflow-hidden z-50">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity opacity-0" onclick="closeCart()"></div>
+            <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+                <div class="w-screen max-w-md translate-x-full">
+                    <div class="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+                        <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h2 class="text-lg font-medium text-gray-900">Shopping cart</h2>
+                                    <div class="flex items-center mt-1">
+                                        <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                                            NEVER GIVE UP ENTERPRISE
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="closeCart()" class="-mr-2 p-2 text-gray-400 hover:text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <div class="flow-root">
+                                    <ul id="cart-items" class="-my-6 divide-y divide-gray-200">
+                                        <li class="py-6 flex">
+                                            <div class="border border-gray-200 rounded-md p-2">
+                                                <p class="text-sm text-gray-500">Your cart is empty</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                <p>Subtotal</p>
+                                <p id="cart-total">KES 0</p>
+                            </div>
+                            <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                            <div class="mt-6">
+                                <button type="button" class="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
+                                    Checkout
+                                </button>
+                            </div>
+                            <div class="mt-6 flex justify-center text-sm text-center text-gray-500">
+                                <p>
+                                    or <button type="button" onclick="closeCart()" class="text-blue-600 font-medium hover:text-blue-500">Continue Shopping</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Cart functionality
+        const cartItems = [];
+        let cartCount = 0;
+        let cartTotal = 0;
+        
+        // Initialize elements
+        const cartButton = document.getElementById('cart-button');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+        const cartCounterElement = document.querySelector('.cart-counter');
+        
+        // Add to cart buttons
+        const addToCartButtons = document.querySelectorAll('.product-card button');
+        
+        // Cart functions
+        function updateCart() {
+            cartCounterElement.textContent = cartCount;
+            cartTotalElement.textContent = `KES ${cartTotal.toLocaleString()}`;
+            
+            // Update cart items display
+            cartItemsContainer.innerHTML = '';
+            
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <li class="py-6 flex">
+                        <div class="border border-gray-200 rounded-md p-2">
+                            <p class="text-sm text-gray-500">Your cart is empty</p>
+                        </div>
+                    </li>
+                `;
+                return;
+            }
+            
+            cartItems.forEach(item => {
+                const cartItemElement = document.createElement('li');
+                cartItemElement.className = 'py-6 flex';
+                cartItemElement.innerHTML = `
+                    <div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-center object-cover">
+                    </div>
+                    <div class="ml-4 flex-1 flex flex-col">
+                        <div>
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                <h3>${item.name}</h3>
+                                <p class="ml-4">KES ${item.price.toLocaleString()}</p>
+                            </div>
+                            <p class="mt-1 text-sm text-gray-500">${item.description}</p>
+                        </div>
+                        <div class="flex-1 flex items-end justify-between text-sm">
+                            <p class="text-gray-500">Qty ${item.quantity}</p>
+                            <div class="flex">
+                                <button type="button" class="font-medium text-blue-600 hover:text-blue-500">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add remove functionality
+                const removeButton = cartItemElement.querySelector('button');
+                removeButton.addEventListener('click', () => {
+                    removeFromCart(item);
+                });
+                
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+        }
+        
+        function addToCart(productName, productPrice, productImage, productDescription) {
+            const existingItem = cartItems.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartItems.push({
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    description: productDescription,
+                    quantity: 1
+                });
+            }
+            
+            cartCount += 1;
+            cartTotal += productPrice;
+            updateCart();
+        }
+        
+        function removeFromCart(item) {
+            cartCount -= item.quantity;
+            cartTotal -= item.price * item.quantity;
+            
+            const itemIndex = cartItems.indexOf(item);
+            if (itemIndex > -1) {
+                cartItems.splice(itemIndex, 1);
+            }
+            
+            updateCart();
+        }
+        
+        function openCart() {
+            cartModal.classList.remove('hidden');
+            setTimeout(() => {
+                document.querySelector('.bg-opacity-75').classList.add('opacity-100');
+                document.querySelector('.translate-x-full').classList.remove('translate-x-full');
+            }, 50);
+        }
+        
+        function closeCart() {
+            document.querySelector('.bg-opacity-75').classList.remove('opacity-100');
+            document.querySelector('.translate-x-full').classList.add('translate-x-full');
+            setTimeout(() => {
+                cartModal.classList.add('hidden');
+            }, 300);
+        }
+        
+        // Event listeners
+        cartButton.addEventListener('click', openCart);
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productCard = button.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                const productPrice = parseInt(productCard.querySelector('.text-blue-600').textContent.replace('KES ', '').replace(',', ''));
+                const productImage = productCard.querySelector('img').src;
+                const productDescription = productCard.querySelector('p.text-gray-500').textContent;
+                
+                addToCart(productName, productPrice, productImage, productDescription);
+                
+                // Show feedback
+                const originalText = button.textContent;
+                button.textContent = 'Added!';
+                button.classList.remove('bg-green-500');
+                button.classList.add('bg-blue-500');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-blue-500');
+                    button.classList.add('bg-green-500');
+                }, 1000);
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Hide any previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Submit the form using Fetch API
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                // Show error message
+                errorMessage.style.display = 'block';
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
