@@ -1,7 +1,7 @@
-﻿import { uuid, nowISO } from '../../src/utils.js';
-import { db } from '../../src/db.js';
-import { jsonResponse, badRequest, serverError } from '../../src/errors.js';
-import { getAuthUser } from '../../src/auth.js';
+﻿import { uuid, nowISO } from '../../../src/utils.js';
+import { db } from '../../../src/db.js';
+import { jsonResponse, badRequest, serverError } from '../../../src/errors.js';
+import { getAuthUser } from '../../../src/auth.js';
 
 export async function onRequestPost(ctx) {
   const body = await ctx.request.json().catch(() => null);
@@ -23,7 +23,6 @@ export async function onRequestPost(ctx) {
   const now = nowISO();
 
   try {
-    // 1. Insert order header
     await d.run(
       `INSERT INTO orders (id, customer_id, branch_id, status, total, created_at, updated_at)
        VALUES (?, ?, ?, 'pending', ?, ?, ?)`,
@@ -35,7 +34,6 @@ export async function onRequestPost(ctx) {
       now
     );
 
-    // 2. Insert each order item
     for (const item of items) {
       await d.run(
         `INSERT INTO order_items (id, order_id, product_id, name, qty, price)
@@ -49,7 +47,6 @@ export async function onRequestPost(ctx) {
       );
     }
 
-    // 3. Optionally record the customer record (best effort)
     if (customer.email) {
       try {
         await d.run(
@@ -62,9 +59,7 @@ export async function onRequestPost(ctx) {
           customer.phone || null,
           now
         );
-      } catch {
-        // customer already exists or schema mismatch — ignore, order is still valid
-      }
+      } catch { /* customer already exists or schema mismatch — order is still valid */ }
     }
 
     return jsonResponse({ orderId, total, items: items.length });
