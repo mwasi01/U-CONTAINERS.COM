@@ -1,4 +1,119 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>about · ngu-platform</title>
-<link rel="stylesheet" href="/assets/css/styles.css"></head>
-<body><main><h1>about</h1></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us · NEVER GIVE UP ENTERPRISE</title>
+  <meta name="description" content="NEVER GIVE UP ENTERPRISE — Premium drums, containers, jikos and farming tools in Kikuyu, Kenya." />
+  <link rel="icon" href="/assets/images/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter","system-ui","sans-serif"] }, colors: { brand: { 500:"#3b82f6",600:"#2563eb",700:"#1d4ed8" }, leaf: { 500:"#10b981",600:"#059669" } } } } };
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+      <a href="/" class="flex items-center gap-3">
+        <span class="h-10 w-10 rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 text-white font-extrabold flex items-center justify-center text-sm">NGU</span>
+        <span class="hidden sm:block leading-tight"><span class="block text-sm font-extrabold">NEVER GIVE UP</span><span class="block text-[11px] text-slate-500 tracking-widest">ENTERPRISE</span></span>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="/products/" class="hover:text-brand-600">Products</a>
+        <a href="/branches/" class="hover:text-brand-600">Branches</a>
+        <a href="/about.html" class="hover:text-brand-600">About</a>
+        <a href="/services.html" class="hover:text-brand-600">Services</a>
+        <a href="/gallery.html" class="hover:text-brand-600">Gallery</a>
+        <a href="/blog.html" class="hover:text-brand-600">Blog</a>
+        <a href="/contact.html" class="hover:text-brand-600">Contact</a>
+      </nav>
+      <a href="/cart/" class="relative p-2"><i class="fa-solid fa-cart-shopping text-lg"></i><span id="cart-count" class="absolute -top-1 -right-1 bg-brand-600 text-white text-[10px] font-bold h-5 min-w-[20px] px-1 rounded-full flex items-center justify-center" style="display:none;">0</span></a>
+    </div>
+  </header>
+  <main class="flex-1">
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-xs font-bold tracking-widest text-brand-600 uppercase">Our story</span>
+      <h1 class="mt-4 text-4xl sm:text-5xl font-extrabold">NEVER GIVE UP ENTERPRISE</h1>
+      <p class="mt-4 text-lg text-slate-600 leading-relaxed">We provide high-quality drums, containers, jikos, and farming tools to meet all your storage and agricultural needs — with persistence and dedication.</p>
+
+      <div class="mt-10 grid sm:grid-cols-3 gap-4">
+        <div class="rounded-xl bg-slate-50 p-5 ring-1 ring-slate-100"><i class="fa-solid fa-drum text-3xl text-brand-600"></i><h3 class="mt-3 font-bold">Drums & Containers</h3><p class="text-sm text-slate-500 mt-1">Plastic and metal drums from 100L to 1000L.</p></div>
+        <div class="rounded-xl bg-slate-50 p-5 ring-1 ring-slate-100"><i class="fa-solid fa-fire text-3xl text-orange-500"></i><h3 class="mt-3 font-bold">Jikos</h3><p class="text-sm text-slate-500 mt-1">Charcoal cookers from small home-size to commercial grade.</p></div>
+        <div class="rounded-xl bg-slate-50 p-5 ring-1 ring-slate-100"><i class="fa-solid fa-seedling text-3xl text-leaf-600"></i><h3 class="mt-3 font-bold">Farming Tools</h3><p class="text-sm text-slate-500 mt-1">Spades, rakes, fork jembes and accessories.</p></div>
+      </div>
+
+      <div class="mt-12 space-y-6 text-slate-700">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">Why we exist</h2>
+          <p class="mt-2">Kenyan households and farms need durable, affordable storage and cooking equipment. We stock what works, at fair prices, with honest advice. Our name says it all — NEVER GIVE UP.</p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">Our promise</h2>
+          <ul class="mt-2 list-disc pl-6 space-y-1">
+            <li>Quality-guaranteed products. If something fails within 30 days, we replace it.</li>
+            <li>Countrywide delivery — from Kikuyu to Nakuru and beyond.</li>
+            <li>Bulk order pricing for farms, schools, and businesses.</li>
+            <li>Real humans on the phone — <a href="tel:+254704787011" class="text-brand-600 hover:underline">+254 704 787 011</a>.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900">Visit us</h2>
+          <div class="grid sm:grid-cols-2 gap-3 mt-3">
+            <a href="/branches/kikuyu.html" class="block rounded-xl p-4 bg-slate-50 ring-1 ring-slate-100 hover:ring-brand-300"><strong>Kikuyu Branch</strong><br><span class="text-sm text-slate-500">Kikuyu, Kenya</span></a>
+            <a href="/branches/nakuru.html" class="block rounded-xl p-4 bg-slate-50 ring-1 ring-slate-100 hover:ring-brand-300"><strong>Nakuru Branch</strong><br><span class="text-sm text-slate-500">Nakuru, Kenya</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+  <footer class="bg-slate-900 text-slate-300 pt-14 pb-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="h-10 w-10 rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 text-white font-extrabold flex items-center justify-center text-sm">NGU</span>
+          <div><div class="text-sm font-extrabold text-white tracking-wide">NEVER GIVE UP</div><div class="text-[11px] text-slate-400 tracking-widest">ENTERPRISE</div></div>
+        </div>
+        <p class="mt-4 text-sm text-slate-400 leading-relaxed">High-quality drums, containers, jikos and farming tools. Serving Kikuyu, Nakuru, and all of Kenya with dedication.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="https://wa.me/254721200637" target="_blank" rel="noopener" class="h-9 w-9 flex items-center justify-center rounded-full bg-slate-800 hover:bg-leaf-600 transition" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+          <a href="https://www.tiktok.com/@user7054409306512" target="_blank" rel="noopener" class="h-9 w-9 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 transition" aria-label="TikTok"><i class="fa-brands fa-tiktok text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold text-white tracking-wide">Quick links</h3>
+        <nav class="mt-4 grid grid-cols-2 gap-y-2 text-sm">
+          <a href="/products/" class="hover:text-white">Products</a>
+          <a href="/branches/" class="hover:text-white">Branches</a>
+          <a href="/about.html" class="hover:text-white">About</a>
+          <a href="/services.html" class="hover:text-white">Services</a>
+          <a href="/gallery.html" class="hover:text-white">Gallery</a>
+          <a href="/blog.html" class="hover:text-white">Blog</a>
+          <a href="/faq.html" class="hover:text-white">FAQ</a>
+          <a href="/contact.html" class="hover:text-white">Contact</a>
+          <a href="/privacy.html" class="hover:text-white">Privacy</a>
+          <a href="/terms.html" class="hover:text-white">Terms</a>
+        </nav>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold text-white tracking-wide">Visit / Contact</h3>
+        <ul class="mt-4 space-y-2 text-sm text-slate-400">
+          <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-brand-400 mt-1"></i> Kikuyu, Kenya</li>
+          <li class="flex items-start gap-2"><i class="fa-solid fa-phone text-brand-400 mt-1"></i> <a href="tel:+254704787011" class="hover:text-white">+254 704 787 011</a></li>
+          <li class="flex items-start gap-2"><i class="fa-regular fa-envelope text-brand-400 mt-1"></i> <a href="mailto:nopgiveup@gmail.com" class="hover:text-white">nopgiveup@gmail.com</a></li>
+          <li class="flex items-start gap-2"><i class="fa-regular fa-clock text-brand-400 mt-1"></i><span>Mon–Fri 8:00–17:00<br />Sat 9:00–14:00<br />Sun closed</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+      &copy; <span data-year>2026</span> NEVER GIVE UP ENTERPRISE. All rights reserved.
+    </div>
+  </footer>
+  <script type="module">
+    import "/assets/js/brand.js";
+  </script>
+</body>
+</html>
