@@ -1,5 +1,93 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>farming-tools · ngu-platform</title>
-<link rel="stylesheet" href="/assets/css/styles.css"></head>
-<body><main><h1>farming-tools</h1><div id="product-grid" data-category="farming-tools"></div></main>
-<script type="module" src="/assets/js/products.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farming & Gardening Tools · NEVER GIVE UP ENTERPRISE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] }, colors: { brand: { 500:'#3b82f6',600:'#2563eb',700:'#1d4ed8' }, leaf: { 500:'#10b981',600:'#059669' } } } } };
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800">
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+      <a href="/" class="flex items-center gap-3">
+        <span class="h-10 w-10 rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 text-white font-extrabold flex items-center justify-center text-sm">NGU</span>
+        <span class="hidden sm:block leading-tight"><span class="block text-sm font-extrabold">NEVER GIVE UP</span><span class="block text-[11px] text-slate-500 tracking-widest">ENTERPRISE</span></span>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="/products/" class="hover:text-brand-600">Products</a>
+        <a href="/branches/" class="hover:text-brand-600">Branches</a>
+        <a href="/about.html" class="hover:text-brand-600">About</a>
+        <a href="/services.html" class="hover:text-brand-600">Services</a>
+        <a href="/contact.html" class="hover:text-brand-600">Contact</a>
+      </nav>
+      <a href="/cart/" class="relative p-2"><i class="fa-solid fa-cart-shopping text-lg"></i><span id="cart-count" class="absolute -top-1 -right-1 bg-brand-600 text-white text-[10px] font-bold h-5 min-w-[20px] px-1 rounded-full flex items-center justify-center" style="display:none;">0</span></a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <nav class="text-sm text-slate-500 mb-4"><a href="/" class="hover:text-brand-600">Home</a> / <a href="/products/" class="hover:text-brand-600">Products</a> / <span class="text-slate-800">Farming & Gardening Tools</span></nav>
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold">Farming & Gardening Tools</h1>
+      <p class="text-slate-500 mt-2">High-quality tools to help you cultivate your land.</p>
+    </div>
+
+    <div class="mb-6 flex flex-wrap gap-2">
+      <a href="/products/" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm">All</a>
+      <a href="/products/drums-containers.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm font-medium">Drums & Containers</a>
+      <a href="/products/jikos.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm font-medium">Jikos</a>
+      <a href="/products/farming-tools.html" class="px-4 py-1.5 rounded-full bg-brand-600 text-white text-sm font-medium">Farming Tools</a>
+      <a href="/products/accessories.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm font-medium">Accessories</a>
+    </div>
+
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <p class="col-span-full text-center text-slate-500 py-12">Loading…</p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { addToCart } from '/assets/js/brand.js';
+    import { productImage } from '/assets/js/product-images.js';
+
+    const category = 'farming-tools';
+
+    async function load() {
+      const grid = document.getElementById('product-grid');
+      try {
+        const res = await fetch('/api/products?category=' + encodeURIComponent(category));
+        const payload = await res.json();
+        const products = payload.data || [];
+        if (!products.length) {
+          grid.innerHTML = '<p class="col-span-full text-center text-slate-500 py-12">No products in this category yet.</p>';
+          return;
+        }
+        grid.innerHTML = products.map((p) => {
+          const img = productImage(p);
+          return `
+          <article class="bg-white rounded-xl overflow-hidden ring-1 ring-slate-100 shadow-sm hover:shadow-lg transition">
+            <a href="/products/${encodeURIComponent(p.id)}.html"><div class="aspect-[4/3] bg-slate-100 overflow-hidden"><img src="${img}" alt="${esc(p.name)}" class="w-full h-full object-cover" loading="lazy" /></div></a>
+            <div class="p-5">
+              <h3 class="font-semibold line-clamp-2">${esc(p.name)}</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${esc(p.description || '')}</p>
+              <div class="mt-4 flex items-center justify-between">
+                <span class="font-bold text-brand-600">KES ${Number(p.price||0).toLocaleString()}</span>
+                <button type="button" data-add='${escAttr(JSON.stringify({id:p.id,name:p.name,price:Number(p.price)||0,image:img}))}' class="text-xs font-semibold bg-leaf-500 text-white px-3 py-1.5 rounded-md hover:bg-leaf-600">Add to cart</button>
+              </div>
+            </div>
+          </article>`;
+        }).join('');
+        grid.querySelectorAll('[data-add]').forEach((b) => b.addEventListener('click', () => {
+          try { addToCart(JSON.parse(b.getAttribute('data-add'))); b.textContent = 'Added ✓'; setTimeout(() => b.textContent = 'Add to cart', 1200); } catch {}
+        }));
+      } catch (e) { grid.innerHTML = '<p class="col-span-full text-center text-red-500 py-12">Failed to load products.</p>'; }
+    }
+    function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function escAttr(s=''){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+    load();
+  </script>
+</body>
+</html>

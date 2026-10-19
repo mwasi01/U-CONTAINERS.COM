@@ -1,4 +1,3 @@
-// Shared NEVER GIVE UP ENTERPRISE script
 const CART_KEY = 'ngu.cart.v1';
 
 export function readCart() {
@@ -17,6 +16,26 @@ export function addToCart(product, qty = 1) {
   if (existing) existing.qty += qty;
   else items.push({ id: product.id, name: product.name, price: product.price, image: product.image || '', qty });
   writeCart(items);
+}
+
+export function updateQty(id, qty) {
+  const items = readCart();
+  const item = items.find((i) => i.id === id);
+  if (!item) return;
+  if (qty <= 0) {
+    writeCart(items.filter((i) => i.id !== id));
+  } else {
+    item.qty = qty;
+    writeCart(items);
+  }
+}
+
+export function removeItem(id) {
+  writeCart(readCart().filter((i) => i.id !== id));
+}
+
+export function clearCart() {
+  writeCart([]);
 }
 
 export function cartCount() {
