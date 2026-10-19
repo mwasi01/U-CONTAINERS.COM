@@ -23,6 +23,8 @@
       <a href="/admin/" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-gauge w-4"></i> Dashboard</a>
       <a href="/admin/products.html" class="flex items-center gap-3 px-3 py-2 rounded-md bg-slate-800 text-white"><i class="fa-solid fa-box w-4"></i> Products</a>
       <a href="/admin/analytics.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-chart-line w-4"></i> Analytics</a>
+      <a href="/admin/best-sellers.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-trophy w-4"></i> Best sellers</a>
+      <a href="/admin/branch-assign.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-code-branch w-4"></i> Branch assign</a>
       <a href="/account/orders.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-receipt w-4"></i> Orders</a>
       <a href="/admin/customers.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-users w-4"></i> Customers</a>
       <a href="/admin/messages.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-regular fa-envelope w-4"></i> Messages</a>
@@ -41,13 +43,13 @@
   </header>
 
   <main class="lg:ml-64 min-h-screen p-6">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 class="text-3xl font-extrabold">Products</h1>
-          <p class="text-slate-500 mt-1">Manage your catalog, prices, and costs.</p>
+          <p class="text-slate-500 mt-1">Manage your catalog, prices, costs, and photos.</p>
         </div>
-        <a href="/admin/product-new.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700" style="background:#2563eb;">
+        <a href="/admin/product-new.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">
           <i class="fa-solid fa-plus"></i> Add product
         </a>
       </div>
@@ -68,6 +70,7 @@
           <table class="w-full text-sm">
             <thead class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider">
               <tr>
+                <th class="text-left p-4 w-16">Photo</th>
                 <th class="text-left p-4">Product</th>
                 <th class="text-left p-4">Category</th>
                 <th class="text-right p-4">Price (KES)</th>
@@ -77,7 +80,7 @@
                 <th class="text-right p-4">Actions</th>
               </tr>
             </thead>
-            <tbody id="tbody"><tr><td colspan="7" class="p-6 text-center text-slate-500">Loading…</td></tr></tbody>
+            <tbody id="tbody"><tr><td colspan="8" class="p-6 text-center text-slate-500">Loading…</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -99,6 +102,31 @@
 
     let products = [];
 
+    // Map product IDs to bundled product photos — same as the storefront
+    const BUNDLED_IMAGES = {
+      'p_250l_open':   '/assets/images/products/250ltrs open.jpg',
+      'p_250l_closed': '/assets/images/products/250ltrs.jpg',
+      'p_170l_funiko': '/assets/images/products/170ltrs.jpg',
+      'p_120l':        '/assets/images/products/120ltrs.jpg',
+      'p_small_jiko':  '/assets/images/products/small jiko.jpg',
+      'p_std_jiko':    '/assets/images/products/stardand jiko.jpg',
+      'p_med_jiko':    '/assets/images/products/mediumsized jiko.jpg',
+      'p_size13_jiko': '/assets/images/products/size13jiko.jpg',
+      'p_vifuniko':    '/assets/images/products/vifuniko.jpg',
+      'p_metal_drum':  '/assets/images/products/metallic drum.jpg',
+      // Farming tools — no bundled photo, use placeholder
+      'p_spade':       null,
+      'p_rake_sm':     null,
+      'p_rake_big':    null,
+      'p_fork_jembe':  null,
+    };
+
+    function productThumb(p) {
+      if (p.image) return p.image;
+      const mapped = BUNDLED_IMAGES[p.id] || BUNDLED_IMAGES[p.slug];
+      return mapped || '/assets/images/placeholder.svg';
+    }
+
     async function load() {
       const q = document.getElementById('search').value.trim();
       const cat = document.getElementById('category-filter').value;
@@ -108,7 +136,7 @@
       const url = '/api/admin/products' + (params.toString() ? '?' + params.toString() : '');
       const res = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
       const body = await res.json();
-      if (!res.ok) { document.getElementById('tbody').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-600">' + (body.error?.message || 'Failed') + '</td></tr>'; return; }
+      if (!res.ok) { document.getElementById('tbody').innerHTML = '<tr><td colspan="8" class="p-6 text-center text-red-600">' + (body.error?.message || 'Failed') + '</td></tr>'; return; }
       products = body.data || [];
       renderTable();
     }
@@ -116,14 +144,22 @@
     function renderTable() {
       const tbody = document.getElementById('tbody');
       if (!products.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">No products. <a href="/admin/product-new.html" class="text-blue-600 hover:underline">Add one →</a></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">No products. <a href="/admin/product-new.html" class="text-blue-600 hover:underline">Add one →</a></td></tr>';
         return;
       }
       tbody.innerHTML = products.map((p) => {
         const profit = (p.cost !== null && p.cost !== undefined && p.price !== null) ? (Number(p.price) - Number(p.cost)) : null;
         const profitCls = profit === null ? 'text-slate-400' : (profit >= 0 ? 'text-emerald-600' : 'text-red-600');
+        const thumb = productThumb(p);
+        const hasCustomImage = !!p.image;
         return `
           <tr class="border-t border-slate-100 hover:bg-slate-50">
+            <td class="p-4">
+              <div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 ring-1 ring-slate-200 relative">
+                <img src="${escapeHtml(thumb)}" alt="${escapeHtml(p.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='/assets/images/placeholder.svg'" />
+                ${hasCustomImage ? '<span class="absolute top-0 right-0 bg-emerald-500 text-white text-[8px] px-1 rounded-bl" title="Custom photo uploaded">✓</span>' : ''}
+              </div>
+            </td>
             <td class="p-4">
               <div class="font-medium">${escapeHtml(p.name)}</div>
               <div class="text-xs text-slate-500">${escapeHtml(p.slug || '')}</div>
@@ -134,8 +170,8 @@
             <td class="p-4 text-right font-medium ${profitCls}">${profit !== null ? profit.toLocaleString() : '—'}</td>
             <td class="p-4 text-center">${Number(p.total_stock || 0)}</td>
             <td class="p-4 text-right space-x-2 whitespace-nowrap">
-              <a href="/admin/product-edit.html?id=${encodeURIComponent(p.id)}" class="text-blue-600 hover:underline text-xs font-medium">Edit</a>
-              <button data-del="${encodeURIComponent(p.id)}" class="text-red-600 hover:underline text-xs font-medium">Delete</button>
+              <a href="/admin/product-edit.html?id=${encodeURIComponent(p.id)}" class="text-blue-600 hover:underline text-xs font-medium inline-flex items-center gap-1"><i class="fa-solid fa-pen"></i> Edit</a>
+              <button data-del="${encodeURIComponent(p.id)}" class="text-red-600 hover:underline text-xs font-medium inline-flex items-center gap-1"><i class="fa-solid fa-trash"></i> Delete</button>
             </td>
           </tr>`;
       }).join('');
