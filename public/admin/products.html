@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products · Admin · NEVER GIVE UP ENTERPRISE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>body{font-family:Inter,system-ui,sans-serif;}</style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+  <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-slate-300 z-40 -translate-x-full lg:translate-x-0 transition-transform">
+    <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+      <span class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 text-white font-extrabold flex items-center justify-center text-sm">NGU</span>
+      <div>
+        <div class="text-sm font-extrabold text-white tracking-wide">NEVER GIVE UP</div>
+        <div class="text-[11px] text-slate-500 tracking-widest">ADMIN</div>
+      </div>
+    </div>
+    <nav class="mt-4 px-3 space-y-1 text-sm">
+      <a href="/admin/" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-gauge w-4"></i> Dashboard</a>
+      <a href="/admin/products.html" class="flex items-center gap-3 px-3 py-2 rounded-md bg-slate-800 text-white"><i class="fa-solid fa-box w-4"></i> Products</a>
+      <a href="/admin/analytics.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-chart-line w-4"></i> Analytics</a>
+      <a href="/account/orders.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-receipt w-4"></i> Orders</a>
+      <a href="/admin/customers.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-solid fa-users w-4"></i> Customers</a>
+      <a href="/admin/messages.html" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800"><i class="fa-regular fa-envelope w-4"></i> Messages</a>
+    </nav>
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800">
+      <div class="text-xs text-slate-500 mb-2">Signed in as</div>
+      <div class="text-sm font-medium text-white truncate" id="user-email">—</div>
+      <button id="logout" class="mt-3 w-full text-sm text-left text-red-400 hover:text-red-300 inline-flex items-center gap-2"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign out</button>
+    </div>
+  </aside>
+
+  <header class="lg:hidden bg-white shadow-sm sticky top-0 z-30 flex items-center justify-between px-4 h-14">
+    <button id="menu-btn" class="text-slate-700"><i class="fa-solid fa-bars"></i></button>
+    <span class="text-sm font-bold">Products</span>
+    <span class="w-6"></span>
+  </header>
+
+  <main class="lg:ml-64 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 class="text-3xl font-extrabold">Products</h1>
+          <p class="text-slate-500 mt-1">Manage your catalog, prices, and costs.</p>
+        </div>
+        <a href="/admin/product-new.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700" style="background:#2563eb;">
+          <i class="fa-solid fa-plus"></i> Add product
+        </a>
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <input id="search" placeholder="Search products…" class="flex-1 rounded-md border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <select id="category-filter" class="rounded-md border border-slate-300 px-3 py-2">
+          <option value="">All categories</option>
+          <option value="drums-containers">Drums & Containers</option>
+          <option value="jikos">Jikos</option>
+          <option value="farming-tools">Farming Tools</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
+
+      <div class="mt-6 bg-white rounded-2xl ring-1 ring-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider">
+              <tr>
+                <th class="text-left p-4">Product</th>
+                <th class="text-left p-4">Category</th>
+                <th class="text-right p-4">Price (KES)</th>
+                <th class="text-right p-4">Cost (KES)</th>
+                <th class="text-right p-4">Profit/unit</th>
+                <th class="text-center p-4">Stock</th>
+                <th class="text-right p-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"><tr><td colspan="7" class="p-6 text-center text-slate-500">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('ngu.token');
+    const user = (() => { try { return JSON.parse(localStorage.getItem('ngu.user') || 'null'); } catch { return null; } })();
+    if (!token || !user || !['owner','admin','manager'].includes(user.role)) {
+      location.href = '/admin/login.html';
+    }
+    document.getElementById('user-email').textContent = user?.email || '—';
+    document.getElementById('menu-btn')?.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
+    document.getElementById('logout').addEventListener('click', () => {
+      localStorage.removeItem('ngu.token'); localStorage.removeItem('ngu.user');
+      location.href = '/admin/login.html';
+    });
+
+    let products = [];
+
+    async function load() {
+      const q = document.getElementById('search').value.trim();
+      const cat = document.getElementById('category-filter').value;
+      const params = new URLSearchParams();
+      if (q) params.set('q', q);
+      if (cat) params.set('category', cat);
+      const url = '/api/admin/products' + (params.toString() ? '?' + params.toString() : '');
+      const res = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+      const body = await res.json();
+      if (!res.ok) { document.getElementById('tbody').innerHTML = '<tr><td colspan="7" class="p-6 text-center text-red-600">' + (body.error?.message || 'Failed') + '</td></tr>'; return; }
+      products = body.data || [];
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tbody');
+      if (!products.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-500">No products. <a href="/admin/product-new.html" class="text-blue-600 hover:underline">Add one →</a></td></tr>';
+        return;
+      }
+      tbody.innerHTML = products.map((p) => {
+        const profit = (p.cost !== null && p.cost !== undefined && p.price !== null) ? (Number(p.price) - Number(p.cost)) : null;
+        const profitCls = profit === null ? 'text-slate-400' : (profit >= 0 ? 'text-emerald-600' : 'text-red-600');
+        return `
+          <tr class="border-t border-slate-100 hover:bg-slate-50">
+            <td class="p-4">
+              <div class="font-medium">${escapeHtml(p.name)}</div>
+              <div class="text-xs text-slate-500">${escapeHtml(p.slug || '')}</div>
+            </td>
+            <td class="p-4 text-slate-600">${escapeHtml(p.category_slug || '—')}</td>
+            <td class="p-4 text-right font-medium">${Number(p.price || 0).toLocaleString()}</td>
+            <td class="p-4 text-right text-slate-600">${p.cost !== null && p.cost !== undefined ? Number(p.cost).toLocaleString() : '—'}</td>
+            <td class="p-4 text-right font-medium ${profitCls}">${profit !== null ? profit.toLocaleString() : '—'}</td>
+            <td class="p-4 text-center">${Number(p.total_stock || 0)}</td>
+            <td class="p-4 text-right space-x-2 whitespace-nowrap">
+              <a href="/admin/product-edit.html?id=${encodeURIComponent(p.id)}" class="text-blue-600 hover:underline text-xs font-medium">Edit</a>
+              <button data-del="${encodeURIComponent(p.id)}" class="text-red-600 hover:underline text-xs font-medium">Delete</button>
+            </td>
+          </tr>`;
+      }).join('');
+      tbody.querySelectorAll('[data-del]').forEach((b) => {
+        b.addEventListener('click', async () => {
+          const id = decodeURIComponent(b.dataset.del);
+          if (!confirm('Delete this product? It will be removed from the storefront.')) return;
+          const res = await fetch('/api/admin/products/' + id, {
+            method: 'DELETE',
+            headers: { Authorization: 'Bearer ' + token },
+          });
+          const body = await res.json();
+          if (!res.ok) { alert(body.error?.message || 'Delete failed'); return; }
+          load();
+        });
+      });
+    }
+
+    document.getElementById('search').addEventListener('input', debounce(load, 300));
+    document.getElementById('category-filter').addEventListener('change', load);
+
+    function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
+    function escapeHtml(s=''){ return String(s).replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    load();
+  </script>
+</body>
+</html>
