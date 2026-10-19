@@ -1,0 +1,1 @@
+Your ngu-platform code is {{code}}

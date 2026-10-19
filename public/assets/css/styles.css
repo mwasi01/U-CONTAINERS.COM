@@ -1,0 +1,16 @@
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #0f172a;
+  --color-accent: #2563eb;
+  --radius: 8px;
+  --space: 1rem;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--color-fg); background: var(--color-bg); }
+a { color: var(--color-accent); }
+main { max-width: 1100px; margin: 0 auto; padding: var(--space); }
+.site-header { display: flex; justify-content: space-between; padding: var(--space); border-bottom: 1px solid #e2e8f0; }
+.site-header nav a { margin-right: 1rem; }
+form { display: grid; gap: .75rem; max-width: 480px; }
+input, textarea, button { font: inherit; padding: .5rem .75rem; border: 1px solid #cbd5e1; border-radius: var(--radius); }
+button { background: var(--color-accent); color: white; border: none; cursor: pointer; }

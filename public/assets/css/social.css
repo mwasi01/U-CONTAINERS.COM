@@ -1,0 +1,2 @@
+.post-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+.post-card header { display: flex; justify-content: space-between; color: #64748b; font-size: .85rem; }

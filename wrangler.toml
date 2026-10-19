@@ -1,0 +1,20 @@
+name = "ngu-platform"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ngu-platform-db"
+database_id = "b43b94eb-409f-476b-a1a1-6ca89b2e3797"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "1c57b00f009c43fdb1530a3a227e28fe"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "ngu-platform-assets"
+
+[vars]
+APP_ENV = "production"

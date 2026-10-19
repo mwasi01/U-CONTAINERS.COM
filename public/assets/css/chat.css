@@ -1,0 +1,4 @@
+.chat-messages { padding: 1rem; }
+.chat-message { margin-bottom: .75rem; }
+.chat-composer { display: flex; gap: .5rem; padding: .75rem; border-top: 1px solid #e2e8f0; }
+.chat-composer input { flex: 1; }
