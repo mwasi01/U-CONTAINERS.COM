@@ -1,5 +1,85 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Products · ngu-platform</title>
-<link rel="stylesheet" href="/assets/css/styles.css"></head>
-<body><main><h1>All products</h1><div id="product-grid" data-branch-filter></div></main>
-<script type="module" src="/assets/js/products.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products · NEVER GIVE UP ENTERPRISE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] }, colors: { brand: { 500:'#3b82f6',600:'#2563eb',700:'#1d4ed8' }, leaf: { 500:'#10b981',600:'#059669' } } } } };
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800">
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+      <a href="/" class="flex items-center gap-3">
+        <span class="h-10 w-10 rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 text-white font-extrabold flex items-center justify-center text-sm">NGU</span>
+        <span class="hidden sm:block leading-tight"><span class="block text-sm font-extrabold">NEVER GIVE UP</span><span class="block text-[11px] text-slate-500 tracking-widest">ENTERPRISE</span></span>
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="/products/" class="text-brand-600">Products</a>
+        <a href="/branches/" class="hover:text-brand-600">Branches</a>
+        <a href="/about.html" class="hover:text-brand-600">About</a>
+        <a href="/services.html" class="hover:text-brand-600">Services</a>
+        <a href="/contact.html" class="hover:text-brand-600">Contact</a>
+      </nav>
+      <a href="/cart/" class="relative p-2"><i class="fa-solid fa-cart-shopping text-lg"></i><span id="cart-count" class="absolute -top-1 -right-1 bg-brand-600 text-white text-[10px] font-bold h-5 min-w-[20px] px-1 rounded-full flex items-center justify-center" style="display:none;">0</span></a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold">All products</h1>
+      <p class="text-slate-500 mt-2">Real prices, real stock. Delivered countrywide.</p>
+    </div>
+
+    <div class="mb-6 flex flex-wrap gap-2">
+      <a href="/products/" class="px-4 py-1.5 rounded-full bg-brand-600 text-white text-sm font-medium">All</a>
+      <a href="/products/drums-containers.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm">Drums & Containers</a>
+      <a href="/products/jikos.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm">Jikos</a>
+      <a href="/products/farming-tools.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm">Farming Tools</a>
+      <a href="/products/accessories.html" class="px-4 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-sm">Accessories</a>
+    </div>
+
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <script type="module">
+    import { addToCart } from '/assets/js/brand.js';
+    const cat = new URLSearchParams(location.search).get('category')
+      || (location.pathname.includes('drums-containers') ? 'drums-containers' : '')
+      || (location.pathname.includes('jikos') ? 'jikos' : '')
+      || (location.pathname.includes('farming-tools') ? 'farming-tools' : '')
+      || (location.pathname.includes('accessories') ? 'accessories' : '');
+
+    async function load() {
+      const grid = document.getElementById('product-grid');
+      try {
+        const qs = cat ? `?category=${encodeURIComponent(cat)}` : '';
+        const res = await fetch('/api/products' + qs);
+        const payload = await res.json();
+        const products = payload.data || [];
+        if (!products.length) { grid.innerHTML = `<p class="col-span-full text-center text-slate-500 py-12">No products in this category yet.</p>`; return; }
+        grid.innerHTML = products.map((p) => `
+          <article class="bg-white rounded-xl overflow-hidden ring-1 ring-slate-100 shadow-sm hover:shadow-lg transition">
+            <a href="/products/${encodeURIComponent(p.id)}.html"><div class="aspect-[4/3] bg-slate-100"><img src="${p.image || '/assets/images/logo.svg'}" alt="${esc(p.name)}" class="w-full h-full object-cover" loading="lazy" /></div></a>
+            <div class="p-5">
+              <h3 class="font-semibold line-clamp-2">${esc(p.name)}</h3>
+              <p class="text-xs text-slate-500 mt-1">${esc(p.category_slug || 'General')}</p>
+              <div class="mt-4 flex items-center justify-between">
+                <span class="font-bold text-brand-600">KES ${Number(p.price||0).toLocaleString()}</span>
+                <button type="button" data-add='${escAttr(JSON.stringify({id:p.id,name:p.name,price:Number(p.price)||0,image:p.image||''}))}' class="text-xs font-semibold bg-leaf-500 text-white px-3 py-1.5 rounded-md hover:bg-leaf-600">Add to cart</button>
+              </div>
+            </div>
+          </article>`).join('');
+        grid.querySelectorAll('[data-add]').forEach((b) => b.addEventListener('click', () => { try { addToCart(JSON.parse(b.getAttribute('data-add'))); b.textContent = 'Added ✓'; setTimeout(() => b.textContent = 'Add to cart', 1200); } catch {} }));
+      } catch (e) { grid.innerHTML = `<p class="col-span-full text-center text-red-500 py-12">Failed to load products.</p>`; }
+    }
+    function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function escAttr(s=''){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+    load();
+  </script>
+</body>
+</html>
