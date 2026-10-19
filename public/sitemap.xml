@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc></url>
-  <url><loc>/about.html</loc></url>
+  <url><loc>https://ngucontainers.com/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://ngucontainers.com/products/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ngucontainers.com/products/drums-containers.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ngucontainers.com/products/jikos.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ngucontainers.com/products/farming-tools.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ngucontainers.com/products/accessories.html</loc><priority>0.8</priority></url>
+  <url><loc>https://ngucontainers.com/branches/</loc><priority>0.7</priority></url>
+  <url><loc>https://ngucontainers.com/branches/kikuyu.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ngucontainers.com/branches/nakuru.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ngucontainers.com/about.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ngucontainers.com/services.html</loc><priority>0.6</priority></url>
+  <url><loc>https://ngucontainers.com/gallery.html</loc><priority>0.5</priority></url>
+  <url><loc>https://ngucontainers.com/blog.html</loc><priority>0.5</priority></url>
+  <url><loc>https://ngucontainers.com/faq.html</loc><priority>0.5</priority></url>
+  <url><loc>https://ngucontainers.com/contact.html</loc><priority>0.7</priority></url>
+  <url><loc>https://ngucontainers.com/privacy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://ngucontainers.com/terms.html</loc><priority>0.3</priority></url>
 </urlset>

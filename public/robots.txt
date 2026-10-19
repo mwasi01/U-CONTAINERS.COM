@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /staff/
+Disallow: /account/
 Disallow: /api/
-Sitemap: /sitemap.xml
+Disallow: /auth/
+Sitemap: https://ngucontainers.com/sitemap.xml

@@ -1,8 +1,9 @@
 import { db } from '../../../../src/db.js';
 import { jsonResponse, forbidden } from '../../../../src/errors.js';
 import { getAuthUser } from '../../../../src/auth.js';
+import { scopedBranchId } from '../../../../src/branch-context.js';
 
-const EDIT_ROLES = ['owner', 'admin', 'manager'];
+const EDIT_ROLES = ['owner', 'admin', 'manager', 'supervisor'];
 
 async function requireEditor(ctx) {
   let user = ctx.data?.user;
@@ -14,10 +15,15 @@ async function requireEditor(ctx) {
   return user;
 }
 
-// GET /api/admin/analytics/best-sellers
 export async function onRequestGet(ctx) {
-  await requireEditor(ctx);
+  const user = await requireEditor(ctx);
+  const url = new URL(ctx.request.url);
+  const requestedBranch = url.searchParams.get('branch') || null;
+  const branchFilter = scopedBranchId(user, requestedBranch);
+
   const d = db(ctx.env);
+  const whereBranch = branchFilter ? ' AND o.branch_id = ?' : '';
+  const branchParams = branchFilter ? [branchFilter] : [];
 
   const baseSql = `
     SELECT
@@ -34,12 +40,14 @@ export async function onRequestGet(ctx) {
         ELSE 0
       END AS margin_pct
     FROM order_items oi
+    JOIN orders o ON o.id = oi.order_id
     LEFT JOIN products p ON p.id = oi.product_id
+    WHERE 1=1${whereBranch}
     GROUP BY oi.product_id, oi.name
   `;
 
-  const byUnits = await d.all(baseSql + ' ORDER BY units_sold DESC LIMIT 20');
-  const byProfit = await d.all(baseSql + ' ORDER BY profit DESC LIMIT 20');
+  const byUnits = await d.all(baseSql + ' ORDER BY units_sold DESC LIMIT 20', ...branchParams);
+  const byProfit = await d.all(baseSql + ' ORDER BY profit DESC LIMIT 20', ...branchParams);
 
   const shape = (r) => ({
     id: r.id,
@@ -53,6 +61,7 @@ export async function onRequestGet(ctx) {
   });
 
   return jsonResponse({
+    branch: branchFilter,
     byUnits: byUnits.map(shape),
     byProfit: byProfit.map(shape),
   });

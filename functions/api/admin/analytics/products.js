@@ -1,8 +1,9 @@
 import { db } from '../../../../src/db.js';
 import { jsonResponse, forbidden } from '../../../../src/errors.js';
 import { getAuthUser } from '../../../../src/auth.js';
+import { scopedBranchId } from '../../../../src/branch-context.js';
 
-const EDIT_ROLES = ['owner', 'admin', 'manager'];
+const EDIT_ROLES = ['owner', 'admin', 'manager', 'supervisor'];
 
 async function requireEditor(ctx) {
   let user = ctx.data?.user;
@@ -14,40 +15,50 @@ async function requireEditor(ctx) {
   return user;
 }
 
-// GET /api/admin/analytics/products
 export async function onRequestGet(ctx) {
-  await requireEditor(ctx);
+  const user = await requireEditor(ctx);
+  const url = new URL(ctx.request.url);
+  const requestedBranch = url.searchParams.get('branch') || null;
+  const branchFilter = scopedBranchId(user, requestedBranch);
+
   const d = db(ctx.env);
+  const whereBranch = branchFilter ? ' AND o.branch_id = ?' : '';
+  const branchParams = branchFilter ? [branchFilter] : [];
 
-  // Top products by units sold
-  const topProducts = await d.all(`
-    SELECT
-      oi.product_id AS id,
-      oi.name AS name,
-      COALESCE(p.category_slug, 'uncategorised') AS category,
-      SUM(oi.qty) AS units_sold,
-      SUM(oi.qty * oi.price) AS revenue,
-      SUM(oi.qty * COALESCE(p.cost, 0)) AS total_cost,
-      SUM(oi.qty * (oi.price - COALESCE(p.cost, 0))) AS profit
-    FROM order_items oi
-    LEFT JOIN products p ON p.id = oi.product_id
-    GROUP BY oi.product_id, oi.name
-    ORDER BY units_sold DESC
-    LIMIT 10
-  `);
+  const topProducts = await d.all(
+    `SELECT
+       oi.product_id AS id,
+       oi.name AS name,
+       COALESCE(p.category_slug, 'uncategorised') AS category,
+       SUM(oi.qty) AS units_sold,
+       SUM(oi.qty * oi.price) AS revenue,
+       SUM(oi.qty * COALESCE(p.cost, 0)) AS total_cost,
+       SUM(oi.qty * (oi.price - COALESCE(p.cost, 0))) AS profit
+     FROM order_items oi
+     JOIN orders o ON o.id = oi.order_id
+     LEFT JOIN products p ON p.id = oi.product_id
+     WHERE 1=1${whereBranch}
+     GROUP BY oi.product_id, oi.name
+     ORDER BY units_sold DESC
+     LIMIT 10`,
+    ...branchParams
+  );
 
-  // Revenue share by category
-  const categoryBreakdown = await d.all(`
-    SELECT
-      COALESCE(p.category_slug, 'uncategorised') AS category,
-      SUM(oi.qty * oi.price) AS revenue
-    FROM order_items oi
-    LEFT JOIN products p ON p.id = oi.product_id
-    GROUP BY category
-    ORDER BY revenue DESC
-  `);
+  const categoryBreakdown = await d.all(
+    `SELECT
+       COALESCE(p.category_slug, 'uncategorised') AS category,
+       SUM(oi.qty * oi.price) AS revenue
+     FROM order_items oi
+     JOIN orders o ON o.id = oi.order_id
+     LEFT JOIN products p ON p.id = oi.product_id
+     WHERE 1=1${whereBranch}
+     GROUP BY category
+     ORDER BY revenue DESC`,
+    ...branchParams
+  );
 
   return jsonResponse({
+    branch: branchFilter,
     topProducts: topProducts.map((p) => ({
       id: p.id,
       name: p.name,

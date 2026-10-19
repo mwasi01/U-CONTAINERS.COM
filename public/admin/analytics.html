@@ -50,6 +50,7 @@
           <p class="text-slate-500 mt-1">Live sales performance · updated in real time</p>
         </div>
         <div class="flex gap-2">
+          <select id="branch-filter" class="rounded-md border border-slate-300 px-3 py-2 text-sm"><option value="">All branches</option></select>
           <select id="period" class="rounded-md border border-slate-300 px-3 py-2 text-sm">
             <option value="day">Last 30 days</option>
             <option value="week">Last 12 weeks</option>
@@ -260,3 +261,20 @@
   </script>
 </body>
 </html>
+<script>
+(async () => {
+  const token = localStorage.getItem('ngu.token');
+  const filter = document.getElementById('branch-filter');
+  if (!filter) return;
+  try {
+    const res = await fetch('/api/org/branches');
+    const body = await res.json();
+    const branches = body.data || [];
+    filter.innerHTML = '<option value="">All branches</option>' +
+      branches.map((b) => `<option value="${b.id}">${b.name}</option>`).join('');
+    filter.addEventListener('change', () => {
+      if (typeof refresh === 'function') refresh();
+    });
+  } catch {}
+})();
+</script>
