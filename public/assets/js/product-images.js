@@ -1,23 +1,41 @@
-// Maps product IDs (or slugs) to real photo paths under /assets/images/products/
+// Maps product IDs to real photo paths under /assets/images/products/
+// Products without a photo fall back to the branded placeholder.
 export const PRODUCT_IMAGES = {
-  'p_250l_open':   '/assets/images/products/250ltrs open.jpg',
-  'p_250l_closed': '/assets/images/products/250ltrs.jpg',
-  'p_170l_funiko': '/assets/images/products/170ltrs.jpg',
-  'p_120l':        '/assets/images/products/120ltrs.jpg',
-  'p_small_jiko':  '/assets/images/products/small jiko.jpg',
-  'p_std_jiko':    '/assets/images/products/stardand jiko.jpg',
-  'p_med_jiko':    '/assets/images/products/mediumsized jiko.jpg',
-  'p_size13_jiko': '/assets/images/products/size13jiko.jpg',
-  'p_spade':       '/assets/images/products/spade.jpg',
-  'p_rake_sm':     '/assets/images/products/small rake.jpg',
-  'p_rake_big':    '/assets/images/products/big rake.jpg',
-  'p_fork_jembe':  '/assets/images/products/fork jembe.jpg',
-  'p_vifuniko':    '/assets/images/products/vifuniko.jpg',
-  'p_metal_drum':  '/assets/images/products/metallic drum.jpg',
+  'p_250l_drum':      '/assets/images/products/250ltrs.jpg',
+  'p_170l_drum':      '/assets/images/products/170ltrs.jpg',
+  'p_120l_drum':      '/assets/images/products/120ltrs.jpg',
+  'p_80l_drum':       '/assets/images/products/1000litres open drum.jpg',
+  'p_50l_drum':       null,
+  'p_metal_drum':     '/assets/images/products/metallic drum.jpg',
+  'p_1000l_tank':     '/assets/images/products/IBC Square Water Tanks 1000 Litre with Galvanized Frame and HDPE Tank.avif',
+  'p_bucket_short':   null,
+  'p_bucket_long':    null,
+  'p_bucket_10l':     null,
+  'p_bucket_20l':     null,
+  'p_dirty_bucket':   null,
+  'p_mtungi_20l':     null,
+  'p_mtungi_10l':     null,
+  'p_mtungi_40l':     null,
+  'p_vibuyu_5l':      null,
+  'p_kasuku_4l':      null,
+  'p_jiko_small':     '/assets/images/products/small jiko.jpg',
+  'p_jiko_standard':  '/assets/images/products/stardand jiko.jpg',
+  'p_jiko_medium':    '/assets/images/products/mediumsized jiko.jpg',
+  'p_jiko_size12':    '/assets/images/products/size13jiko.jpg',
+  'p_jiko_size13':    '/assets/images/products/size13jiko.jpg',
+  'p_jiko_size15':    '/assets/images/products/size13jiko.jpg',
+  'p_spade':          null,
+  'p_rake_big':       null,
+  'p_rake_small':     null,
+  'p_fork_jembe':     null,
+  'p_slasher':        null,
+  'p_vifuniko_metal': '/assets/images/products/vifuniko.jpg',
+  'p_mabati':         null,
 };
 
 export function productImage(product) {
-  if (!product) return '/assets/images/logo.svg';
+  if (!product) return '/assets/images/placeholder.svg';
   if (product.image) return product.image;
-  return PRODUCT_IMAGES[product.id] || PRODUCT_IMAGES[product.slug] || '/assets/images/logo.svg';
+  const mapped = PRODUCT_IMAGES[product.id] || PRODUCT_IMAGES[product.slug];
+  return mapped || '/assets/images/placeholder.svg';
 }
